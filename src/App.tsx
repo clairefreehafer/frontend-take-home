@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Package, fetchSearch } from "./api";
-import { FixedSizeList as List } from "react-window";
-import AutoSizer from "react-virtualized-auto-sizer";
+import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 import "./App.css";
+import List from "./List";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
@@ -42,19 +42,8 @@ function App() {
           <div>Loading...</div>
         ) : (
           <AutoSizer>
-            {({ height, width }: { height: number, width: number }) => {
-              return (
-                <List
-                  height={height}
-                  itemCount={results.length}
-                  itemSize={35}
-                  width={width}
-                >
-                  {({ index, style }: { index: number, style: any }) => (
-                    <div style={style}>{results[index].name}: {results[index].description}, {results[index].npmLink}</div>
-                  )}
-                </List>
-              )
+            {(props: Size) => {
+              return <List results={results} {...props} />
             }}
           </AutoSizer>
         )}
