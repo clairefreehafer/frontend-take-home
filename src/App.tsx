@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Package, fetchSearch } from "./api";
 import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 import "./App.css";
@@ -9,6 +9,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<Package[]>([]);
   const [error, setError] = useState("");
+  const [isDevMode, setIsDevMode] = useState(false);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search); 
+    const isDevMode = queryParams.get("idm");
+
+    if (isDevMode === "true") {
+      setIsDevMode(true);
+    }
+  }, []);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(event.target.value)
@@ -16,11 +26,22 @@ function App() {
 
   async function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(searchValue);
+    
+    let results = [];
+    setIsLoading(true);
+    setError("");
 
-    const results = await fetchSearch(searchValue);
+    try {
+      if (isDevMode) {
+        throw new Error("Dev mode activated!");
+      }
 
-    setResults(results);
+      results = await fetchSearch(searchValue);
+      setResults(results);
+    } catch (e) {
+      setError(`Oops! Something went wrong :( Error message: ${e}`);
+    }
+    setIsLoading(false);
   }
 
   return (
@@ -36,6 +57,7 @@ function App() {
           />
           <button type="submit">Search</button>
         </form>
+        {isDevMode && <p>Dev Mode</p>}
       </header>
       <main className="main">
         {isLoading ? (

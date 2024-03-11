@@ -1,5 +1,16 @@
 # Gremlin Frontend Take Home
 
+## Instructions
+
+### Run app
+```
+yarn start
+```
+
+### Activate dev mode
+
+To trigger the error messaging, add the query string `?idm=true` to activate dev mode and force an error state.
+
 > Build NPM package search tool
 
 - [What we are looking for](#what-we-are-looking-for)
