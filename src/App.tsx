@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import { Package, fetchSearch } from "./api";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import "./App.css";
-
-type Package = {
-  name: string;
-  description: string;
-  npmLink: string;
-}
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
@@ -17,11 +14,13 @@ function App() {
     setSearchValue(event.target.value)
   }
 
-  function handleSearch(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log(searchValue);
 
-    // API call, setIsLoading
+    const results = await fetchSearch(searchValue);
+
+    setResults(results);
   }
 
   return (
@@ -38,15 +37,26 @@ function App() {
           <button type="submit">Search</button>
         </form>
       </header>
-      <main>
+      <main className="main">
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <ol>
-            <li>result</li>
-            <li>result</li>
-            <li>result</li>
-          </ol>
+          <AutoSizer>
+            {({ height, width }: { height: number, width: number }) => {
+              return (
+                <List
+                  height={height}
+                  itemCount={results.length}
+                  itemSize={35}
+                  width={width}
+                >
+                  {({ index, style }: { index: number, style: any }) => (
+                    <div style={style}>{results[index].name}: {results[index].description}, {results[index].npmLink}</div>
+                  )}
+                </List>
+              )
+            }}
+          </AutoSizer>
         )}
 
         {error && <div>{error}</div>}
