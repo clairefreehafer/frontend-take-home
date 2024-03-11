@@ -10,13 +10,14 @@
 
 .main {
   flex-grow: 2;
+  margin: 1rem 0;
 }
 
 .header {
   align-items: center;
   display: flex;
-  margin-bottom: 1rem;
 
+  /* TODO: Extract breakpoint value to variable */
   @media screen and (max-width: 400px) {
     flex-direction: column;
   }

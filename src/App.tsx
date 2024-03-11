@@ -4,6 +4,7 @@ import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 import "./App.css";
 import List from "./components/List";
 import Header from "./components/Header";
+import Theme from "./components/Theme";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
@@ -67,6 +68,7 @@ function App() {
 
         {error && <div>{error}</div>}
       </main>
+      <Theme />
     </div>
   );
 }
