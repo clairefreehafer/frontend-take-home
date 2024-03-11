@@ -47,7 +47,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>npm</h1>
+        <h1 className="title">npm</h1>
         <form className="search" onSubmit={handleSearch}>
           <input
             type="search"
@@ -55,10 +55,11 @@ function App() {
             value={searchValue}
             onChange={handleChange}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="search-button">Search</button>
         </form>
-        {isDevMode && <p>Dev Mode</p>}
+        {isDevMode && <p className="dev-mode">Dev Mode</p>}
       </header>
+      
       <main className="main">
         {isLoading ? (
           <div>Loading...</div>

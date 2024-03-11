@@ -1,6 +1,6 @@
 import React from "react";
 import { Package } from "./api";
-import { FixedSizeList, FixedSizeListProps, ListChildComponentProps } from "react-window";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
 
 function ListItem({ result, style }: { result: Package, style: any }) {
   return (
@@ -18,8 +18,9 @@ type Props = {
 }
 
 export default function List({ height, width, results }: Props) {
-  console.log(height, width)
   return (
+    // Would ideally like to use VariableHeightList here, but seems complex
+    // to calculate height dynamically.
     <FixedSizeList
       height={height}
       itemCount={results.length}
