@@ -1,5 +1,5 @@
 import React from "react";
-import { Package } from "./api";
+import { Package } from "../api";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 
 function ListItem({ result, style }: { result: Package, style: any }) {

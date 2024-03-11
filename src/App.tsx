@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Package, fetchSearch } from "./api";
 import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 import "./App.css";
-import List from "./List";
+import List from "./components/List";
+import Header from "./components/Header";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
@@ -46,19 +47,12 @@ function App() {
 
   return (
     <div className="app">
-      <header className="header">
-        <h1 className="title">npm</h1>
-        <form className="search" onSubmit={handleSearch}>
-          <input
-            type="search"
-            className="search-input"
-            value={searchValue}
-            onChange={handleChange}
-          />
-          <button type="submit" className="search-button">Search</button>
-        </form>
-        {isDevMode && <p className="dev-mode">Dev Mode</p>}
-      </header>
+      <Header
+        handleSearch={handleSearch}
+        searchValue={searchValue}
+        handleChange={handleChange}
+        isDevMode={isDevMode}
+      />
       
       <main className="main">
         {isLoading ? (
