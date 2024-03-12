@@ -12,6 +12,8 @@
 
 To turn on error messaging and force an error state, add the query string `?idm=true` to the URL.
 
+---
+
 > Build NPM package search tool
 
 - [What we are looking for](#what-we-are-looking-for)
