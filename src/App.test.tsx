@@ -7,3 +7,6 @@ test('renders learn react link', () => {
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+// With more time, would add tests here for fetching the API and checking
+// that the list renders the expected data properly.
