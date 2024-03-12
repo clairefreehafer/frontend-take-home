@@ -1,3 +1,4 @@
+/* Would experiment with `prefers-color-scheme` media query with more time */
 [data-theme=dark] {
   --background-color: black;
   --text-color: white;
@@ -26,7 +27,12 @@ body {
 body, #root {
   box-sizing: border-box;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+
+  /* Limit to touch screens or else chrome desktop won't fall back
+  to 100vh like firefox and safari do. */
+  @media only screen and (hover: none) {
+    min-height: -webkit-fill-available;
+  }
 }
 
 a {

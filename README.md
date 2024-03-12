@@ -2,14 +2,15 @@
 
 ## Instructions
 
-### Run app
-```
-yarn start
-```
+### Set Up
+
+1. Clone repo
+2. Install dependencies with `yarn install`
+3. Run app at `localhost:3000` with `yarn run`.
 
 ### Activate dev mode
 
-To trigger the error messaging, add the query string `?idm=true` to activate dev mode and force an error state.
+To turn on error messaging and force an error state, add the query string `?idm=true` to the URL.
 
 > Build NPM package search tool
 

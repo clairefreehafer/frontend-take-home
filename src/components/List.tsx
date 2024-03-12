@@ -1,6 +1,7 @@
 import React from "react";
 import { Package } from "../api";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
+import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 
 function ListItem({ result, style }: { result: Package, style: any }) {
   return (
@@ -13,23 +14,28 @@ function ListItem({ result, style }: { result: Package, style: any }) {
 
 type Props = {
   results: Package[];
-  height: number;
-  width: number;
 }
 
-export default function List({ height, width, results }: Props) {
+export default function List({ results }: Props) {
   return (
-    // Would ideally like to use VariableHeightList here, but seems complex
-    // to calculate height dynamically.
-    <FixedSizeList
-      height={height}
-      itemCount={results.length}
-      itemSize={100}
-      width={width}
-    >
-      {({ index, style }: ListChildComponentProps) => (
-        <ListItem result={results?.[index]} style={style} />
-      )}
-    </FixedSizeList>
+    <AutoSizer>
+      {(props: Size) => {
+        return (
+          // With more time, I'd experiment with VariableHeightList here.
+          // Based on a cursory google, seems complex to implement. Could also
+          // try truncating the description using CSS `text-overflow: ellpises`
+          <FixedSizeList
+            height={props.height}
+            itemCount={results.length}
+            itemSize={100}
+            width={props.width}
+          >
+            {({ index, style }: ListChildComponentProps) => (
+              <ListItem result={results?.[index]} style={style} />
+            )}
+          </FixedSizeList>
+        )
+      }}
+    </AutoSizer>
   )
 }

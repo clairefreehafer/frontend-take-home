@@ -7,14 +7,15 @@ export type Package = {
   npmLink: string;
 }
 
-export async function fetchSearch(query: string): Promise<Package[]> {
+export async function fetchSearch(query: string): Promise<Package[] | string> {
   let resultsJson;
 
   try {
     const results = await fetch(`${SEARCH_URL}${query}`)
     resultsJson = await results.json();
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
+    return e.message;
   } finally {
     // ideally this would be typed better, but keeping it generic for now.
     return resultsJson.map((result: { [key: string]: any }) => ({

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Package, fetchSearch } from "./api";
-import AutoSizer, { Size } from "react-virtualized-auto-sizer";
 import "./App.css";
 import List from "./components/List";
 import Header from "./components/Header";
@@ -29,7 +28,7 @@ function App() {
   async function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     
-    let results = [];
+    let results;
     setIsLoading(true);
     setError("");
 
@@ -39,9 +38,14 @@ function App() {
       }
 
       results = await fetchSearch(searchValue);
+
+      if (typeof results === "string") {
+        throw new Error(results);
+      }
+
       setResults(results);
-    } catch (e) {
-      setError(`Oops! Something went wrong :( Error message: ${e}`);
+    } catch (e: any) {
+      setError(e.message);
     }
     setIsLoading(false);
   }
@@ -59,14 +63,10 @@ function App() {
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <AutoSizer>
-            {(props: Size) => {
-              return <List results={results} {...props} />
-            }}
-          </AutoSizer>
+          <List results={results} />
         )}
 
-        {error && <div>{error}</div>}
+        {error && <div>Oops! Something went wrong. :( <br />Error: {error}</div>}
       </main>
       <Theme />
     </div>
